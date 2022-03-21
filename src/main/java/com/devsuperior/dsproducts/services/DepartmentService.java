@@ -25,9 +25,8 @@ public class DepartmentService {
     }
     
     public DepartmentDTO findById(UUID id) {
-    	Optional<Department> department = repository.findById(id);
-    	Department entity = department.orElseThrow(() -> new ResourceNotFoundException("Department not found!"));
-    	return new DepartmentDTO(entity);
+    	Department department = getByid(id);
+    	return new DepartmentDTO(department);
     }
     
     public DepartmentDTO insert(DepartmentDTO departmentDTO) {
@@ -36,6 +35,18 @@ public class DepartmentService {
     	copyDtoToEntity(departmentDTO, department);
     	department = repository.save(department);
     	return new DepartmentDTO(department);
+    }
+    
+    public DepartmentDTO update(UUID id, DepartmentDTO departmentDTO) {
+    	Department department = getByid(id);
+    	copyDtoToEntity(departmentDTO, department);
+    	department = repository.save(department);
+    	return new DepartmentDTO(department);
+    }
+    
+    private Department getByid(UUID id) {
+    	Optional<Department> department = repository.findById(id);
+    	return department.orElseThrow(() -> new ResourceNotFoundException("Department not found!"));
     }
 
 	private void copyDtoToEntity(DepartmentDTO departmentDTO, Department department) {
