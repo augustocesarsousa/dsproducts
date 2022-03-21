@@ -29,5 +29,17 @@ public class DepartmentService {
     	Department entity = department.orElseThrow(() -> new ResourceNotFoundException("Department not found!"));
     	return new DepartmentDTO(entity);
     }
+    
+    public DepartmentDTO insert(DepartmentDTO departmentDTO) {
+    	Department department = new Department();
+    	department.setId(UUID.randomUUID());
+    	copyDtoToEntity(departmentDTO, department);
+    	department = repository.save(department);
+    	return new DepartmentDTO(department);
+    }
+
+	private void copyDtoToEntity(DepartmentDTO departmentDTO, Department department) {
+		department.setName(departmentDTO.getName());		
+	}
 
 }
