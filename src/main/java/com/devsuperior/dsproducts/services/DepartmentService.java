@@ -44,6 +44,14 @@ public class DepartmentService {
     	return new DepartmentDTO(department);
     }
     
+    public void delete(UUID id) {
+    	if(!repository.existsById(id)) {
+    		throw new ResourceNotFoundException("Department not found!");
+    	}
+    	repository.deleteById(id);
+    	
+    }
+    
     private Department getByid(UUID id) {
     	Optional<Department> department = repository.findById(id);
     	return department.orElseThrow(() -> new ResourceNotFoundException("Department not found!"));
