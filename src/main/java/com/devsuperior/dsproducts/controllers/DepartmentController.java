@@ -1,6 +1,7 @@
 package com.devsuperior.dsproducts.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.devsuperior.dsproducts.dto.DepartmentDTO;
 import com.devsuperior.dsproducts.services.DepartmentService;
@@ -8,6 +9,7 @@ import com.devsuperior.dsproducts.services.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +24,12 @@ public class DepartmentController {
     public ResponseEntity<List<DepartmentDTO>> findAll() {
         List<DepartmentDTO> departments = service.findAll();
         return ResponseEntity.ok(departments);
+    }
+    
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<DepartmentDTO> fingById(@PathVariable UUID id) {
+        DepartmentDTO department = service.findById(id);
+        return ResponseEntity.ok(department);
     }
 
 }
