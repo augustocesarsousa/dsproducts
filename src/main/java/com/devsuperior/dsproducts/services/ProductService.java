@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.devsuperior.dsproducts.dto.ProductDTO;
 import com.devsuperior.dsproducts.entities.Product;
@@ -25,12 +24,22 @@ public class ProductService {
     	return new ProductDTO(product);
     }
     
-    public List<ProductDTO> findByDepartment(@PathVariable String department) {
+    public List<ProductDTO> findByDepartment(String department) {
     	List<Product> products;
     	if(department.equals("")) {
     		products = repository.findAll();
     	}else {
     		products = repository.findByDepartment(department);
+    	}
+    	return products.stream().map(x -> new ProductDTO(x)).collect(Collectors.toList());
+    }
+    
+    public List<ProductDTO> findByDescription(String text) {
+    	List<Product> products;  
+    	if(text.equals("")) {
+    		products = repository.findAll();
+    	}else {
+    		products = repository.findByDescription("%"+text+"%");
     	}
     	return products.stream().map(x -> new ProductDTO(x)).collect(Collectors.toList());
     }
