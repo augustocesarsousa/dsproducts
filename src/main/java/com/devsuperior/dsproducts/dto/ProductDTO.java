@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.data.cassandra.core.mapping.Frozen;
-
 import com.devsuperior.dsproducts.embedded.Prop;
 import com.devsuperior.dsproducts.entities.Product;
 
