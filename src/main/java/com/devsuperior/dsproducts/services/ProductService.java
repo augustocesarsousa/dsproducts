@@ -26,7 +26,12 @@ public class ProductService {
     }
     
     public List<ProductDTO> findByDepartment(@PathVariable String department) {
-    	List<Product> products = repository.findByDepartment(department);
+    	List<Product> products;
+    	if(department.equals("")) {
+    		products = repository.findAll();
+    	}else {
+    		products = repository.findByDepartment(department);
+    	}
     	return products.stream().map(x -> new ProductDTO(x)).collect(Collectors.toList());
     }
     
